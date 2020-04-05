@@ -1,0 +1,7 @@
+.directory
+.gradle
+build/
+data/
+logs/
+out/
+
