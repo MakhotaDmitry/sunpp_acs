@@ -62,9 +62,9 @@ public class RunApp {
 
         RunApp app = new RunApp();
         try {
-            app.loadData_FromExcel("1.xlsx");
+            app.loadData_FromExcel("data/1.xlsx");
             app.loadData();
-//            app.generateProtocols();
+            app.generateProtocols();
 
 //            Double a = 2223.34500;
 //            Double b = 4.00;
@@ -156,6 +156,9 @@ public class RunApp {
 
                     m_msp_equips.add(msp);
                     break;
+
+//                default:
+//                    System.out.println("Unknow type equipment");
             }
             
 //            System.out.println();
@@ -163,6 +166,10 @@ public class RunApp {
         }
     }
     
+    /**
+     * @FIXME:  Emulate date from database
+     * @param _msp 
+     */
     private void fillMSP (CCMsp _msp) {
         _msp.m_equip_number = "AD34";
         _msp.m_equip_year = 1993;
@@ -174,7 +181,6 @@ public class RunApp {
      * @return
      */
     private CCMsp getMeassureFromExcel_Msp(String _pos) {
-        CCMsp msp = new CCMsp();
         String pos = null;
 
         while (rowExcelIterator_msp.hasNext()) {
@@ -184,7 +190,8 @@ public class RunApp {
             if (cellIterator.hasNext()) { 
                 pos = (String) getValueFromExcelCell(cellIterator.next());
                 if(pos.equals(_pos)) {
-                    msp.m_pos = pos.toString();
+                    CCMsp msp = new CCMsp();
+                    msp.m_pos = pos;
                     if (cellIterator.hasNext()) msp.m_res_ro_8_7 = (Double) getValueFromExcelCell(cellIterator.next());
                     if (cellIterator.hasNext()) msp.m_res_ro_8_9 = (Double) getValueFromExcelCell(cellIterator.next());
                     if (cellIterator.hasNext()) msp.m_u = (Double) getValueFromExcelCell(cellIterator.next());

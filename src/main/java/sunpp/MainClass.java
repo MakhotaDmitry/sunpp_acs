@@ -28,7 +28,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.IBodyElement;
@@ -142,16 +144,108 @@ public class MainClass {
 //        out.close();
 //        document.close();
 //    }
+    
     public void getTextFromDocx() throws FileNotFoundException, IOException {
         XWPFDocument docx = new XWPFDocument(new FileInputStream("МСП.docx"));
 
         XWPFWordExtractor we = new XWPFWordExtractor(docx);
         System.out.println(we.getText());
     }
-
+    
     public void testCopyDOCX() {
         try {
-            XWPFDocument doc = new XWPFDocument(new FileInputStream("МСП.docx"));
+            XWPFDocument doc = new XWPFDocument(new FileInputStream("data/templates/МСП.docx"));
+            XWPFDocument doc_out = new XWPFDocument(new FileInputStream("МСП.docx"));
+
+            Iterator<XWPFParagraph> paras = doc.getParagraphsIterator();
+            Iterator<XWPFTable> tables = doc.getTablesIterator();
+
+            Iterator<IBodyElement> bodyIterator = doc.getBodyElementsIterator();
+            while (bodyIterator.hasNext()) {
+                IBodyElement el = bodyIterator.next();
+                Class<?> ss = el.getClass();
+                if (ss.getName().equals("org.apache.poi.xwpf.usermodel.XWPFParagraph")) {
+                    XWPFParagraph par = paras.next();
+                    XWPFParagraph par_out_doc = doc_out.createParagraph();
+                    copyAllRunsToAnotherParagraph(par, par_out_doc);
+                    
+//                    System.out.println(par.getText());
+                } /*else if (ss.getName().equals("org.apache.poi.xwpf.usermodel.XWPFTable")) {
+                    XWPFTable table = tables.next();
+
+//                    XWPFTable table_1 = doc.createTable();
+//                    doc.setTable(1, table_1);
+                    for (int i = 0; i < 100; i++) {
+                        CTTbl ctTbl = CTTbl.Factory.newInstance(); // Create a new CTTbl for the new table
+
+                        XWPFParagraph paragraph = doc_out.createParagraph();
+                        paragraph.setPageBreak(true);
+                        XWPFParagraph para = doc_out.createParagraph();
+                        XWPFRun run = para.createRun();
+                        run.setText("line " + i);
+                        doc_out.createTable();
+
+                        XWPFTable table1 = table;
+                        ctTbl.set(table1.getCTTbl()); // Copy the template table's CTTbl
+                        XWPFTable table2 = new XWPFTable(ctTbl, doc_out); // Create a new table using the CTTbl upon
+                        doc_out.setTable(i, table2);
+                    }
+
+                    for (XWPFTableRow row : table.getRows()) {
+                        for (XWPFTableCell cell : row.getTableCells()) {
+                            for (XWPFParagraph p : cell.getParagraphs()) {
+                                for (XWPFRun r : p.getRuns()) {
+                                    String text = r.getText(0);
+                                    if (text != null && text.contains("{{1_1}}")) {
+                                        text = text.replace("{{1_1}}", "haystack");
+                                        r.setText(text, 0);
+                                    }
+                                }
+                            }
+                        }
+                    }
+//                    System.out.println(table.getText());
+                }*/
+            }
+            doc_out.write(new FileOutputStream("output.docx"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void copyAllRunsToAnotherParagraph(XWPFParagraph oldPar, XWPFParagraph newPar) {
+        final int DEFAULT_FONT_SIZE = 10;
+
+        for (XWPFRun run : oldPar.getRuns()) {
+            String textInRun = run.getText(0);
+            if (textInRun == null || textInRun.isEmpty()) {
+                continue;
+            }
+
+            int fontSize = run.getFontSize();
+//            System.out.println("run text = '" + textInRun + "' , fontSize = " + fontSize);
+
+            XWPFRun newRun = newPar.createRun();
+
+            // Copy text
+            newRun.setText(textInRun);
+
+            // Apply the same style
+            newRun.setFontSize((fontSize == -1) ? DEFAULT_FONT_SIZE : run.getFontSize());
+            newRun.setFontFamily(run.getFontFamily());
+            newRun.setBold(run.isBold());
+            newRun.setItalic(run.isItalic());
+            newRun.setStrike(run.isStrike());
+            newRun.setColor(run.getColor());
+//            newRun.setKerning(1);
+        }
+    }
+
+    public void testCopyDOCX_old_1() {
+        try {
+            XWPFDocument doc = new XWPFDocument(new FileInputStream("data/templates/МСП.docx"));
             XWPFDocument doc_out = new XWPFDocument(new FileInputStream("МСП.docx"));
 
 //            List<XWPFParagraph> paras = doc.getParagraphs();
@@ -165,7 +259,7 @@ public class MainClass {
                 Class<?> ss = el.getClass();
                 if (ss.getName().equals("org.apache.poi.xwpf.usermodel.XWPFParagraph")) {
                     XWPFParagraph par = paras.next();
-                    System.out.println(par.getText());
+//                    System.out.println(par.getText());
                 } else if (ss.getName().equals("org.apache.poi.xwpf.usermodel.XWPFTable")) {
                     XWPFTable table = tables.next();
 
@@ -271,65 +365,6 @@ public class MainClass {
         }
     }
 
-    public void copyAllRunsToAnotherParagraph(XWPFParagraph oldPar, XWPFParagraph newPar) {
-        final int DEFAULT_FONT_SIZE = 10;
-
-        for (XWPFRun run : oldPar.getRuns()) {
-            String textInRun = run.getText(0);
-            if (textInRun == null || textInRun.isEmpty()) {
-                continue;
-            }
-
-            int fontSize = run.getFontSize();
-            System.out.println("run text = '" + textInRun + "' , fontSize = " + fontSize);
-
-            XWPFRun newRun = newPar.createRun();
-
-            // Copy text
-            newRun.setText(textInRun);
-
-            // Apply the same style
-            newRun.setFontSize((fontSize == -1) ? DEFAULT_FONT_SIZE : run.getFontSize());
-            newRun.setFontFamily(run.getFontFamily());
-            newRun.setBold(run.isBold());
-            newRun.setItalic(run.isItalic());
-            newRun.setStrike(run.isStrike());
-            newRun.setColor(run.getColor());
-        }
-    }
-
-    public void dbTesting() {
-        try {
-            Class.forName(driverName);
-        } catch (ClassNotFoundException e) {
-            System.out.println("Can't get class. No driver found");
-            e.printStackTrace();
-            return;
-        }
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(connectionString);
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM `Positions`");
-
-            while (rs.next()) {
-                System.out.println(rs.getString("pos") + "\t"
-                        + rs.getString("rtzo_sher") + "\t"
-                        + rs.getString("shdu_rt"));
-            }
-        } catch (SQLException e) {
-            System.out.println("Can't get connection. Incorrect URL");
-            e.printStackTrace();
-            return;
-        }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println("Can't close connection");
-            e.printStackTrace();
-            return;
-        }
-    }
 
     public static void main(String[] args) {
         MainClass app = new MainClass();
@@ -340,12 +375,23 @@ public class MainClass {
 //        }
 
         //        app.dbTesting();
-        try {
-            app.getTextFromDocx();
-            app.testCopyDOCX();
-        } catch (IOException ex) {
-            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        app.testCopyDOCX();
+        CCMsWordTemplate word = new CCMsWordTemplate("data/templates/МСП.docx");
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("{{1_1}}", "val 1");
+        map.put("{{1_2}}", "val 2");
+        word.fillBodyByTemplate(map);
+        map.put("{{1_1}}", "val > 3");
+        map.put("{{1_2}}", "val < 4");
+        map.put("{{sit_name_1}}", "bspt");
+        word.fillBodyByTemplate(map);
+        word.save("out111/1.docx");
+        
+//        try {
+//            app.getTextFromDocx();
+//        } catch (IOException ex) {
+//            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         System.out.println("end app");
     }
 }

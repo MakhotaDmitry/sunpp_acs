@@ -12,11 +12,12 @@ plugins {
 //baseName = project.name + '-all'
 
 
-//mainClassName = 'sunpp.MainClass'
+mainClassName = 'sunpp.MainClass'
 //mainClassName = 'sunpp.TestFrame'
 //mainClassName = 'sunpp.Test1JFrame'
 //mainClassName = 'sunpp.RunApp'
-mainClassName = 'sunpp.SqlLearn'
+//mainClassName = 'sunpp.SqlLearn'
+//mainClassName = 'activejdbc.ActiveJDBCApp'
 
 repositories {
     jcenter()
@@ -29,8 +30,17 @@ dependencies {
     compile 'org.apache.poi:poi-ooxml:3.15'
     compile 'org.xerial:sqlite-jdbc:3.8.11.1'
     //    implementation 'org.hibernate:hibernate-core:5.0.3.Final'
-    compile 'org.hibernate:hibernate-core:5.0.3.Final'
-    compile 'org.javalite:activejdbc:1.4.13'
+    //    compile 'org.hibernate:hibernate-core:5.0.3.Final'
+    //    compile 'org.javalite:activejdbc:1.4.13'
+    
+    compile group: 'org.javalite', name: 'activejdbc', version: '1.4.13'
+    compile group: 'org.javalite', name: 'activejdbc-instrumentation', version: '1.4.13'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    
+    // https://mvnrepository.com/artifact/fr.opensagres.xdocreport/xdocreport
+    //    compile group: 'fr.opensagres.xdocreport', name: 'xdocreport', version: '1.0.4'
+
+
     
     //     compile group: 'org.apache.poi', name: 'poi', version: '3.11-beta2'
     //     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.11-beta2'

@@ -5,10 +5,14 @@
  */
 package activejdbc;
 
+import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.Table;
+
 /**
  *
  * @author dmitry
  */
-public class EmployeeModel {
-    
+@Table("Positions")
+public class PositionsModel extends Model {
+
 }
