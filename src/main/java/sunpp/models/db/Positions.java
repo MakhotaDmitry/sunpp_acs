@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package activejdbc;
+package sunpp.models.db;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
@@ -13,6 +13,6 @@ import org.javalite.activejdbc.annotations.Table;
  * @author dmitry
  */
 @Table("Positions")
-public class PositionsModel extends Model {
+public class Positions extends Model {
 
 }

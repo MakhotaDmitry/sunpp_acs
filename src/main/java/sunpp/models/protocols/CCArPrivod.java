@@ -3,19 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sunpp.protocols;
+package sunpp.models.protocols;
 
 /**
  *
  * @author dmitry
  */
-public class CCElectChPrivod {
+public class CCArPrivod {
 
     public String m_pos = null;
     public String m_type_repair = null;
-    public String m_resist_izol_cep = null;
-    public String m_resist_izol_stat = null;
-    public String m_isp_sil_cep = null;
     public String m_date = null;
     public String m_man = null;
 }

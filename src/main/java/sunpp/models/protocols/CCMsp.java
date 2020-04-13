@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sunpp.protocols;
+package sunpp.models.protocols;
 
 import java.lang.reflect.Field;
 
@@ -14,14 +14,14 @@ import java.lang.reflect.Field;
 public class CCMsp {
 
     public String m_equip_number = null;
-    public Integer m_equip_year = null;
+    public String m_equip_year = null;
     public String m_pos = null;
     public String m_type_repair = null;
-    public Double m_res_ro_8_7 = null;
-    public Double m_res_ro_8_9 = null;
-    public Double m_u = null;
-    public Double m_i = null;
-    public Double m_p = null;
+    public String m_res_ro_8_7 = null;
+    public String m_res_ro_8_9 = null;
+    public String m_u = null;
+    public String m_i = null;
+    public String m_p = null;
     public String m_repair_date = null;
     public String m_workers = null;
 

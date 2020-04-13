@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sunpp.protocols;
+package sunpp.models.db;
+
+import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.Table;
 
 /**
  *
  * @author dmitry
  */
-public class CCArPrivod {
+@Table("Equipments")
+public class Equipments extends Model {
 
-    public String m_pos = null;
-    public String m_type_repair = null;
-    public String m_date = null;
-    public String m_man = null;
 }

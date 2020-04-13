@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sunpp.protocols;
+package sunpp.models.protocols;
 
 /**
  *
  * @author dmitry
  */
-public class CCResistContrCabel {
-
-    public String m_pos = null;
-    public String m_resist_izol = null;
+public class CCSit {
+    public String name = null;
+    public String type = null;
+    public String number = null;
+    public String date = null;
 }

@@ -56,7 +56,7 @@ public class CCMsWordTemplate {
 //                System.out.println(entry);
                 if (entry.toString().equals("word/document.xml")) {
 //                    InputStreamReader isReader = new InputStreamReader(stream);
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "utf-8"));
 //                    StringBuilder sb = new StringBuilder();
                     String str;
                     while ((str = reader.readLine()) != null) {
@@ -112,6 +112,11 @@ public class CCMsWordTemplate {
     }
 
     public void save(String fileName) {
+        // nothing to write
+        if (this.bodyFilled.length() == 0) {
+            return;
+        }
+
         try {
 //            Files.copy(Paths.get(this.fileTemplatePath), Paths.get(fileName), StandardCopyOption.REPLACE_EXISTING);
             Files.createDirectories(Paths.get(fileName).getParent());
@@ -155,7 +160,7 @@ public class CCMsWordTemplate {
                     }
                 } else {
                     zos.putNextEntry(new ZipEntry("word/document.xml"));
-                    zos.write(str_doc.toString().getBytes());
+                    zos.write(str_doc.toString().getBytes("utf-8"));
 
 //                    InputStream is = zipFile.getInputStream(entryIn);
 //                    byte[] buf = new byte[1024];

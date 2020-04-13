@@ -13,11 +13,6 @@ plugins {
 
 
 mainClassName = 'sunpp.MainClass'
-//mainClassName = 'sunpp.TestFrame'
-//mainClassName = 'sunpp.Test1JFrame'
-//mainClassName = 'sunpp.RunApp'
-//mainClassName = 'sunpp.SqlLearn'
-//mainClassName = 'activejdbc.ActiveJDBCApp'
 
 repositories {
     jcenter()
@@ -26,8 +21,8 @@ repositories {
 
 dependencies {
     //     testCompile 'junit:junit:4.12'
-    compile 'org.apache.poi:poi:3.15'
-    compile 'org.apache.poi:poi-ooxml:3.15'
+    compile 'org.apache.poi:poi:3.17'
+    compile 'org.apache.poi:poi-ooxml:3.17'
     compile 'org.xerial:sqlite-jdbc:3.8.11.1'
     //    implementation 'org.hibernate:hibernate-core:5.0.3.Final'
     //    compile 'org.hibernate:hibernate-core:5.0.3.Final'
@@ -102,8 +97,8 @@ task getHomeDir {
 launch4j {
     //    headerType='console'
     headerType="gui"
-    //    mainClassName =
+//    mainClassName = "$mainClassName"
     outfile = "SAR.exe"
     icon = "${projectDir}/src/main/resources/images/icon.ico"
-    jar = '../libs/gradleproject1-all-1.0.jar'
+    jar = "${projectDir}/build/libs/sunpp_acs-1.0.jar"
 }

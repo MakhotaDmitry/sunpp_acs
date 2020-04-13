@@ -5,6 +5,8 @@
  */
 package activejdbc;
 
+import sunpp.models.db.Positions;
+import sunpp.models.db.ElectricalEnclosures;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
@@ -32,7 +34,7 @@ public class ActiveJDBCApp {
     }
 
     protected void read() {
-        LazyList<Model> list = PositionsModel.find("system_security_num = ?", 2);
+        LazyList<Model> list = Positions.find("system_security_num = ?", 2);
         System.out.println("Size: " + list.size());
 
         if (list.size() == 0) {

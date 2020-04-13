@@ -6,3 +6,4 @@ logs/
 out*
 
 .~lock*
+*.xlsx
